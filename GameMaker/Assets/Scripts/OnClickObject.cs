@@ -23,7 +23,6 @@ public class OnClickObject : MonoBehaviour
     // You just set up the Event in the inspector for easy peasy, but the UnityEvent could also be coded the same way if needed.
     public void EventClick(string type) // methods have to be public void to be used by UnityEvents, they can't really return anything either, as far as I know... At least I don't know how an event will capture the return...
     {
-        print("EventClick!");
         if (type == "MenuItem")
             AnimationController.AnimateObject(gameObject);
         
