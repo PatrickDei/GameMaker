@@ -1,0 +1,13 @@
+{
+    "name": "Risk",
+    "figure": {
+        "type": "complex",
+        "movement": "contact"
+    },
+    "player": {
+        "currency": "health"
+    },
+    "end": {
+        "lose": 0
+    }
+}

@@ -1,0 +1,13 @@
+{
+    "name": "Monopoly",
+    "figure": {
+        "type": "simple",
+        "movement": "ordered"
+    },
+    "player": {
+        "currency": "cash"
+    },
+    "end": {
+        "lose": 0
+    }
+}

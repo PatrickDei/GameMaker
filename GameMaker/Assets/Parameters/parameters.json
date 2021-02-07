@@ -1,0 +1,14 @@
+{
+    "figure":{
+        "movement": [
+            "ordered",
+            "contact",
+            "free"
+        ],
+        "type": [
+            "simple",
+            "complex"
+        ]
+    }
+    
+}
