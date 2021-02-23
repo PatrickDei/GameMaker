@@ -1055,6 +1055,11 @@ PrefabInstance:
       propertyPath: m_Text
       value: PLAY
       objectReference: {fileID: 0}
+    - target: {fileID: 4755820735666228321, guid: e1a9a70fbab2a87469feefd74a726163,
+        type: 3}
+      propertyPath: m_Name
+      value: LevelSelect
+      objectReference: {fileID: 0}
     - target: {fileID: 7968103265430580730, guid: e1a9a70fbab2a87469feefd74a726163,
         type: 3}
       propertyPath: m_LocalPosition.y

@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Events; // this namespace makes the magic
+using System;
 
 
 public class OnClickObject : MonoBehaviour
@@ -15,7 +16,6 @@ public class OnClickObject : MonoBehaviour
 
     private void OnMouseDown()
     {
-        print("Touch invoked!");
         anEvent.Invoke(); // Triggers the events you have setup in the inspector
     }
 
@@ -23,9 +23,9 @@ public class OnClickObject : MonoBehaviour
     // You just set up the Event in the inspector for easy peasy, but the UnityEvent could also be coded the same way if needed.
     public void EventClick(string type) // methods have to be public void to be used by UnityEvents, they can't really return anything either, as far as I know... At least I don't know how an event will capture the return...
     {
+        Action<string> callback = name => SceneController.OnSceneLoad(name);
+
         if (type == "MenuItem")
-            AnimationController.AnimateObject(gameObject);
-        
-        //AnimationController.Press(gameObject);
+            StartCoroutine(AnimationController.AnimateObject(gameObject, callback));
     }
 }

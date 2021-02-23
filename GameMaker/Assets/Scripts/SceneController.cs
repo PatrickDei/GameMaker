@@ -5,8 +5,9 @@ using UnityEngine.SceneManagement;
 
 public class SceneController : MonoBehaviour
 {
-    static void OnSceneLoad(string scene)
+    public static void OnSceneLoad(string scene)
     {
+        Debug.Log("On scene load called");
         SceneManager.LoadScene(scene);
     }
 }
