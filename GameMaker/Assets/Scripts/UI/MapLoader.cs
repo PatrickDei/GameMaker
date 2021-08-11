@@ -24,7 +24,8 @@ public class MapLoader : MonoBehaviour
             {
                 if (prefabToLoad != null)
                 {
-                    Instantiate(prefabToLoad, new Vector3(-5.2f + i * 15f, 6.5f, 60), Quaternion.identity);
+                    GameObject newMap = Instantiate(prefabToLoad, new Vector3(-5.2f + i * 15f, 6.5f, 30), Quaternion.identity);
+                    newMap.name = sprite.name;
                     prefabToLoad.GetComponent<SpriteRenderer>().sprite = sprite;
                     i++;
                 }
