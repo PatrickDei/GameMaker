@@ -5,9 +5,10 @@ using UnityEngine.SceneManagement;
 
 public class SceneController : MonoBehaviour
 {
-    public static void OnSceneLoad(string scene)
+
+    public static void OnSceneLoad(string name)
     {
-        Debug.Log("On scene load called");
-        SceneManager.LoadScene(scene);
+        Debug.LogFormat("Loading scene {0}", name);
+        SceneManager.LoadScene(name);
     }
 }

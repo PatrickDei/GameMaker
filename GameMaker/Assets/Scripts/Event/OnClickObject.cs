@@ -21,10 +21,13 @@ public class OnClickObject : MonoBehaviour
         Debug.LogFormat("Clicked Object Of Type {0}", type);
 
         Action<String> callback = sceneswitch => SceneController.OnSceneLoad(gameObject.name);
-
         if (type == "MenuItem")
         {
             StartCoroutine(AnimationController.AnimateObject(gameObject, callback));
+        }
+        if(type == "Map")
+        {
+            SceneController.OnSceneLoad("RuleSelection");
         }
     }
 
@@ -32,5 +35,7 @@ public class OnClickObject : MonoBehaviour
     {
         Debug.Log("Map selected");
         SelectionController.SelectItem(gameObject);
+
+        SwitchScene();
     }
 }
