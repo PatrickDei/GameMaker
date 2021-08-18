@@ -24,6 +24,13 @@ MonoBehaviour:
     - Maps
     m_MainAsset: {fileID: 0}
     m_TargetAsset: {fileID: 0}
+  - m_GUID: 3c32c8ae26243fe44a6281c3a495ec24
+    m_Address: Assets/Prefabs/Maps/Sphere.prefab
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - Maps
+    m_MainAsset: {fileID: 0}
+    m_TargetAsset: {fileID: 0}
   - m_GUID: 95796e07e2ba3bf42b4a5f22c65f800e
     m_Address: Assets/Resources_moved/Maps/Risk.jpg
     m_ReadOnly: 0
@@ -36,10 +43,8 @@ MonoBehaviour:
     m_ReadOnly: 0
     m_SerializedLabels:
     - Maps
-    m_MainAsset: {fileID: 2421508806283141472, guid: 9ce66a9e0f142194ca303bc3d1f21fbf,
-      type: 3}
-    m_TargetAsset: {fileID: 2421508806283141472, guid: 9ce66a9e0f142194ca303bc3d1f21fbf,
-      type: 3}
+    m_MainAsset: {fileID: 0}
+    m_TargetAsset: {fileID: 0}
   m_ReadOnly: 0
   m_Settings: {fileID: 11400000, guid: 7e08dba8343b2b944aeed89199dce0c6, type: 2}
   m_SchemaSet:

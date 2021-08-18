@@ -1,7 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.Events; // this namespace makes the magic
+using UnityEngine.Events;
 using System;
 
 
@@ -37,5 +37,13 @@ public class OnClickObject : MonoBehaviour
         SelectionController.SelectItem(gameObject);
 
         SwitchScene();
+    }
+
+    public void SelectMovementStyle()
+    {
+        Debug.LogFormat("Movement style: {0}", gameObject.name);
+        GameInstance.SharedInstance.MovementStyle = gameObject.name;
+
+        SelectionController.NextSelectionStep();
     }
 }
