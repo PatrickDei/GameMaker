@@ -4,6 +4,7 @@ using UnityEngine;
 using UnityEngine.Events;
 using UnityEngine.AddressableAssets;
 using UnityEngine.ResourceManagement.AsyncOperations;
+using System.Linq;
 
 public class LoadObject : MonoBehaviour
 {
@@ -51,8 +52,34 @@ public class LoadObject : MonoBehaviour
 
             Debug.LogFormat("Parent is: {0}", target.name);
             newObject.transform.SetParent(target.transform);
-            newObject.transform.rotation = Quaternion.AngleAxis(newObject.transform.rotation.x - 90, Vector3.right);
+            if(AddressablesGroup != "Figures")
+                newObject.transform.rotation = Quaternion.AngleAxis(newObject.transform.rotation.x - 90, Vector3.right);
             newObject.name = obj.name;
         }
+    }
+
+    public void LoadChosenGameObjects(GameObject parent)
+    {
+        GameObject map = null;
+        foreach (var obj in prefabs)
+        {
+            if (obj.name == GameInstance.SharedInstance.MapName)
+            {
+                map = Instantiate(obj, parent.transform.position, Quaternion.identity);
+                //map.transform.localScale = newObject.transform.localScale * 3;
+
+                Debug.LogFormat("Parent is: {0}", parent.name);
+                map.transform.SetParent(parent.transform);
+                map.transform.position = parent.transform.position;
+                map.name = obj.name;
+                break;
+            }
+        }
+
+        GameObject figure = Instantiate(
+            Resources.Load<GameObject>("prefabs/" + GameInstance.SharedInstance.Players.First().FigureName), 
+            map.transform.position, 
+            Quaternion.identity);
+        figure.transform.parent = parent.transform;
     }
 }

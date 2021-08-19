@@ -6,6 +6,7 @@ TagManager:
   tags:
   - MenuItem
   - Map
+  - Figure
   layers:
   - Default
   - TransparentFX

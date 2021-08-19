@@ -3,11 +3,12 @@ using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
 using UnityEngine.SceneManagement;
-
+using UnityEngine.UI;
 
 public class SelectionController : MonoBehaviour
 {
-    public static int SelectionStep { get; set; }
+    public static int RuleSelectionStep { get; set; }
+    public static int ObjectSelectionStep { get; set; }
 
     public static void SelectItem(GameObject selectedObject)
     {
@@ -16,10 +17,17 @@ public class SelectionController : MonoBehaviour
             case "Map": 
                 GameInstance.SharedInstance.MapName = selectedObject.name;
                 Debug.LogFormat("Selected map: {0}", GameInstance.SharedInstance.MapName);
+                SelectionController.NextSelectionStep("Object");
                 break;
             case "Figure":
-                GameInstance.SharedInstance.Players.Add(new PlayerInstance(new List<Figure>(), selectedObject));
+                GameInstance.SharedInstance.Players = new List<Player>(
+                    new Player[] {
+                        new Player(
+                            new List<Figure>(new Figure[] { new Figure() }), selectedObject.name
+                        ) 
+                    });
                 GameInstance.SharedInstance.Players.First().Figures.Add(new Figure());
+                GameInstance.SharedInstance.Players.First().Name = selectedObject.name;
                 break;
 
             default:
@@ -38,7 +46,7 @@ public class SelectionController : MonoBehaviour
 
     private static void NextRuleSelectionStep()
     {
-        SelectionStep++;
+        RuleSelectionStep++;
 
         GameObject buttonHolder = GameObject.Find("Buttons");
 
@@ -46,21 +54,21 @@ public class SelectionController : MonoBehaviour
             GameObject.Destroy(child.gameObject);
 
 
-        switch (SelectionStep)
+        switch (RuleSelectionStep)
         {
             case 1:
                 GameObject newButton = Instantiate(Resources.Load<GameObject>("Prefabs/DefaultButton"), new Vector3(), Quaternion.identity);
                 newButton.transform.SetParent(buttonHolder.transform);
                 break;
             default:
-                Debug.LogFormat("Rule selection steps have been de-synchronised. Current step: {0}", SelectionStep);
+                Debug.LogFormat("Rule selection steps have been de-synchronised. Current step: {0}", RuleSelectionStep);
                 break;
         }
     }
 
     private static void NextObjectSelectionStep()
     {
-        SelectionStep++;
+        ObjectSelectionStep++;
 
         GameObject buttonHolder = GameObject.Find("SelectionArea");
 
@@ -68,16 +76,18 @@ public class SelectionController : MonoBehaviour
             GameObject.Destroy(child.gameObject);
 
 
-        switch (SelectionStep)
+        switch (ObjectSelectionStep)
         {
             case 1:
                 GameObject loader = GameObject.Find("Loader script");
                 loader.GetComponent<LoadObject>().enabled = false;
                 loader.GetComponent<LoadObject>().AddressablesGroup = "Figures";
                 loader.GetComponent<LoadObject>().enabled = true;
+
+                GameObject.Find("ProgressText").GetComponent<Text>().text = "Choose the figure";
                 break;
             default:
-                Debug.LogFormat("Object selection steps have been de-synchronised. Current step: {0}", SelectionStep);
+                Debug.LogFormat("Object selection steps have been de-synchronised. Current step: {0}", ObjectSelectionStep);
                 break;
         }
     }

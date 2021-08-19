@@ -14,8 +14,8 @@ GameObject:
   - component: {fileID: 558227225373564941}
   - component: {fileID: 1666698531771215395}
   m_Layer: 5
-  m_Name: Ordered
-  m_TagString: Untagged
+  m_Name: DefaultButton
+  m_TagString: MenuItem
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
