@@ -20,4 +20,5 @@ public class GameInstance
 
     public string MapName;
     public string MovementStyle;
+    public List<PlayerInstance> Players;
 }

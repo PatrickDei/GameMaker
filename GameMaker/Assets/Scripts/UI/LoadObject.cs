@@ -9,12 +9,12 @@ public class LoadObject : MonoBehaviour
 {
 
     [SerializeField] UnityEvent anEvent;
-    [SerializeField] string AddressablesGroup;
+    [SerializeField] public string AddressablesGroup;
     private IList<GameObject> prefabs;
 
-    public void Start()
+    public void OnEnable()
     {
-        Debug.LogFormat("Loading {0}", AddressablesGroup);
+        Debug.LogWarningFormat("Loading {0}", AddressablesGroup);
         Addressables.LoadAssetsAsync<GameObject>(AddressablesGroup, null).Completed += AddressablesAreReady;
     }
 
@@ -50,7 +50,7 @@ public class LoadObject : MonoBehaviour
                 continue;
 
             Debug.LogFormat("Parent is: {0}", target.name);
-            newObject.transform.parent = target.transform;
+            newObject.transform.SetParent(target.transform);
             newObject.transform.rotation = Quaternion.AngleAxis(newObject.transform.rotation.x - 90, Vector3.right);
             newObject.name = obj.name;
         }

@@ -45,6 +45,20 @@ MonoBehaviour:
     - Maps
     m_MainAsset: {fileID: 0}
     m_TargetAsset: {fileID: 0}
+  - m_GUID: d0b75cd3acf36034684b81e20c88e51f
+    m_Address: Assets/Prefabs/Figures/Two.prefab
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - Figures
+    m_MainAsset: {fileID: 0}
+    m_TargetAsset: {fileID: 0}
+  - m_GUID: dc66a5fd403eb274e87831af0aef3492
+    m_Address: Assets/Prefabs/Figures/Figure.prefab
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - Figures
+    m_MainAsset: {fileID: 0}
+    m_TargetAsset: {fileID: 0}
   m_ReadOnly: 0
   m_Settings: {fileID: 11400000, guid: 7e08dba8343b2b944aeed89199dce0c6, type: 2}
   m_SchemaSet:

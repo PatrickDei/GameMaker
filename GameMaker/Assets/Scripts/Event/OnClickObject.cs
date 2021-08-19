@@ -25,10 +25,10 @@ public class OnClickObject : MonoBehaviour
         {
             StartCoroutine(AnimationController.AnimateObject(gameObject, callback));
         }
-        if(type == "Map")
+        /*if(type == "Map")
         {
             SceneController.OnSceneLoad("RuleSelection");
-        }
+        }*/
     }
 
     public void SelectMap()
@@ -36,7 +36,16 @@ public class OnClickObject : MonoBehaviour
         Debug.Log("Map selected");
         SelectionController.SelectItem(gameObject);
 
-        SwitchScene();
+        SelectionController.NextSelectionStep("Object");
+        //SwitchScene();
+    }
+
+    public void SelectFigure()
+    {
+        Debug.Log("Figure selected");
+        SelectionController.SelectItem(gameObject);
+
+        SceneController.OnSceneLoad("RuleSelection");
     }
 
     public void SelectMovementStyle()
@@ -44,6 +53,6 @@ public class OnClickObject : MonoBehaviour
         Debug.LogFormat("Movement style: {0}", gameObject.name);
         GameInstance.SharedInstance.MovementStyle = gameObject.name;
 
-        SelectionController.NextSelectionStep();
+        SelectionController.NextSelectionStep("Rule");
     }
 }

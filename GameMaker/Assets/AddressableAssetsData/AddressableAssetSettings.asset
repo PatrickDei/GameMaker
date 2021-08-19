@@ -67,6 +67,7 @@ MonoBehaviour:
     m_LabelNames:
     - default
     - Maps
+    - Figures
   m_SchemaTemplates: []
   m_GroupTemplateObjects:
   - {fileID: 11400000, guid: ff1b5d46c2fa6fd4a8901185072855e7, type: 2}
