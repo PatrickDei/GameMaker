@@ -23,10 +23,10 @@ public class SelectionController : MonoBehaviour
                 GameInstance.SharedInstance.Players = new List<Player>(
                     new Player[] {
                         new Player(
-                            new List<Figure>(new Figure[] { new Figure() }), selectedObject.name
+                            new List<Figure>(), 
+                            selectedObject.name
                         ) 
                     });
-                GameInstance.SharedInstance.Players.First().Figures.Add(new Figure());
                 GameInstance.SharedInstance.Players.First().Name = selectedObject.name;
                 break;
 

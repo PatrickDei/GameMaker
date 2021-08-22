@@ -5,6 +5,7 @@ using UnityEngine.Events;
 using UnityEngine.AddressableAssets;
 using UnityEngine.ResourceManagement.AsyncOperations;
 using System.Linq;
+using System.Reflection;
 
 public class LoadObject : MonoBehaviour
 {
@@ -81,5 +82,35 @@ public class LoadObject : MonoBehaviour
             map.transform.position, 
             Quaternion.identity);
         figure.transform.parent = parent.transform;
+
+        Destroy(map.GetComponent<BoxCollider>());
+        Destroy(map.GetComponent<OnClickObject>());
+        Debug.Log("Component deleted on parent!");
+
+        GameInstance.SharedInstance.Players.First().Figures.Add(new Figure(figure));
+    }
+
+    private Component CopyComponent(Component original, GameObject destination)
+    {
+        System.Type type = original.GetType();
+        Component copy = destination.AddComponent(type);
+        // Copied fields can be restricted with BindingFlags
+        System.Reflection.FieldInfo[] fields = type.GetFields();
+        Debug.LogFormat("Field size: {0}, object {1}", fields.Length, destination.name);
+        foreach (System.Reflection.FieldInfo field in fields)
+        {
+            field.SetValue(copy, field.GetValue(original));
+        }
+
+        BindingFlags flags = BindingFlags.Public | BindingFlags.NonPublic | BindingFlags.Instance | BindingFlags.Default;
+        System.Reflection.PropertyInfo[] properties = type.GetProperties(flags);
+        Debug.LogFormat("Properties size: {0}, object {1}", properties.Length, destination.name);
+        foreach (System.Reflection.PropertyInfo property in properties)
+        {
+            if(property.CanWrite)
+                property.SetValue(copy, property.GetValue(original));
+        }
+
+        return copy;
     }
 }

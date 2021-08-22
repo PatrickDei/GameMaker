@@ -8,7 +8,7 @@ using System;
 public class OnClickObject : MonoBehaviour
 {
 
-    [SerializeField] UnityEvent anEvent;
+    [SerializeField] public UnityEvent anEvent;
 
     private void OnMouseDown()
     {
@@ -46,5 +46,11 @@ public class OnClickObject : MonoBehaviour
         SelectionController.SelectItem(gameObject);
 
         SceneController.OnSceneLoad("Gameplay");
+    }
+
+    public void SelectField()
+    {
+        Debug.LogFormat("Field name: {0}, position x & y: {1} {2}", gameObject.name, gameObject.transform.position.x, gameObject.transform.position.y);
+        GameInstance.SharedInstance.MovePlayersFigure(gameObject);
     }
 }

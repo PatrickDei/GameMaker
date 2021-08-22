@@ -21,4 +21,12 @@ public class GameInstance
     public string MapName;
     public string MovementStyle;
     public List<Player> Players;
+    private static int Turn;
+
+    public void MovePlayersFigure(GameObject target)
+    {
+        Turn++;
+
+        Players[Turn % Players.Count].MoveFigure(target);
+    }
 }
