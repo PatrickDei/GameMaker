@@ -27,28 +27,9 @@ public class OnClickObject : MonoBehaviour
         }
     }
 
-    public void SelectMap()
-    {
-        Debug.Log("Map selected");
-        SelectionController.SelectItem(gameObject);
-    }
-
-    public void SelectNumberOfPlayers()
-    {
-        SelectionController.NextSelectionStep("Object");
-    }
-
-    public void SelectFigure()
-    {
-        Debug.Log("Figure selected");
-        SelectionController.SelectItem(gameObject);
-    }
-
-    public void SelectMovementStyle()
+    public void SelectItem()
     {
         SelectionController.SelectItem(gameObject);
-
-        SceneController.OnSceneLoad("Gameplay");
     }
 
     public void SelectField()

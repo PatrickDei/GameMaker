@@ -595,7 +595,7 @@ PrefabInstance:
     - target: {fileID: 558227225373564939, guid: b88c8dddd8c893e46b0587dccca25da5,
         type: 3}
       propertyPath: m_Name
-      value: DefaultButton
+      value: ContinueButton
       objectReference: {fileID: 0}
     - target: {fileID: 558227225373564940, guid: b88c8dddd8c893e46b0587dccca25da5,
         type: 3}
@@ -710,7 +710,7 @@ PrefabInstance:
     - target: {fileID: 558227225373564941, guid: b88c8dddd8c893e46b0587dccca25da5,
         type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
-      value: SelectNumberOfPlayers
+      value: SelectItem
       objectReference: {fileID: 0}
     - target: {fileID: 558227225373564941, guid: b88c8dddd8c893e46b0587dccca25da5,
         type: 3}

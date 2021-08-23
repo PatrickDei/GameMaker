@@ -15,6 +15,8 @@ public class SelectionController : MonoBehaviour
 
     public static void SelectItem(GameObject selectedObject)
     {
+        Debug.LogFormat("Selected object: {0}, tag: {1}", selectedObject.name, selectedObject.tag);
+
         switch (selectedObject.tag)
         {
             case "Map": 
@@ -40,8 +42,16 @@ public class SelectionController : MonoBehaviour
                 }
                 break;
 
+            case "MenuItem":
+                NextSelectionStep("Object");
+                break;
+
+            case "MovementStyle":
+                SceneController.OnSceneLoad("Gameplay");
+                break;
+
             default:
-                Debug.Log("Type not recognised");
+                Debug.LogWarning("Type not recognised");
                 break;
         }
     }

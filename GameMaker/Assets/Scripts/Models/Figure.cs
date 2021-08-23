@@ -11,7 +11,7 @@ public class Figure
         Figurine = prefab;
     }
 
-    public void MoveTo(GameObject target, GameObject movedObject)
+    public void MoveTo(GameObject target)
     {
         Figurine.transform.position = target.transform.position;
     }

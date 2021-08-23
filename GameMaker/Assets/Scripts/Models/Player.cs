@@ -20,6 +20,6 @@ public class Player
 
     public void MoveFigure(GameObject target)
     {
-        Figures.First().MoveTo(target, GameObject.Find("Two"));
+        Figures.First().MoveTo(target);
     }
 }
