@@ -77,17 +77,20 @@ public class LoadObject : MonoBehaviour
             }
         }
 
-        GameObject figure = Instantiate(
-            Resources.Load<GameObject>("prefabs/" + GameInstance.SharedInstance.Players.First().FigureName), 
-            map.transform.position, 
-            Quaternion.identity);
-        figure.transform.parent = parent.transform;
+        for (int i = 0; i < GameInstance.SharedInstance.Players.Count; i++)
+        {
+            GameObject figure = Instantiate(
+                Resources.Load<GameObject>("prefabs/" + GameInstance.SharedInstance.Players[i].FigureName),
+                map.transform.position,
+                Quaternion.identity);
+            figure.transform.parent = parent.transform;
+
+            GameInstance.SharedInstance.Players[i].Figures = new List<Figure>() { new Figure(figure) };
+        }
 
         Destroy(map.GetComponent<BoxCollider>());
         Destroy(map.GetComponent<OnClickObject>());
         Debug.Log("Component deleted on parent!");
-
-        GameInstance.SharedInstance.Players.First().Figures.Add(new Figure(figure));
     }
 
     private Component CopyComponent(Component original, GameObject destination)

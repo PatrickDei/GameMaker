@@ -33,12 +33,15 @@ public class OnClickObject : MonoBehaviour
         SelectionController.SelectItem(gameObject);
     }
 
+    public void SelectNumberOfPlayers()
+    {
+        SelectionController.NextSelectionStep("Object");
+    }
+
     public void SelectFigure()
     {
         Debug.Log("Figure selected");
         SelectionController.SelectItem(gameObject);
-
-        SceneController.OnSceneLoad("RuleSelection");
     }
 
     public void SelectMovementStyle()
