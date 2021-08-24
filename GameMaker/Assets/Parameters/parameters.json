@@ -1,14 +1,10 @@
 {
-    "figure":{
-        "movement": [
-            "ordered",
-            "contact",
-            "free"
-        ],
-        "type": [
-            "simple",
-            "complex"
-        ]
+    "GameEnd": {
+      "Win": [
+        "Reach goal"
+      ],
+      "Lose": [
+        "Amount of figures left"
+      ]
     }
-    
 }

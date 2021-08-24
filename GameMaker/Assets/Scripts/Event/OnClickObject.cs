@@ -34,7 +34,6 @@ public class OnClickObject : MonoBehaviour
 
     public void SelectField()
     {
-        Debug.LogFormat("Field name: {0}, position x & y: {1} {2}", gameObject.name, gameObject.transform.position.x, gameObject.transform.position.y);
-        GameInstance.SharedInstance.MovePlayersFigure(gameObject);
+        GameController.TryMoveFigure(gameObject);
     }
 }

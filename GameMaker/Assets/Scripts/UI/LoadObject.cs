@@ -73,6 +73,15 @@ public class LoadObject : MonoBehaviour
                 map.transform.SetParent(parent.transform);
                 map.transform.position = parent.transform.position;
                 map.name = obj.name;
+
+                if (GameInstance.SharedInstance.MovementStyle == "Free movement")
+                {
+                    GameInstance.SharedInstance.Fields = new List<KeyValuePair<GameObject, int>>();
+                    int i = 0;
+                    foreach (Transform child in map.transform.GetChild(0).transform)
+                        GameInstance.SharedInstance.Fields.Add(new KeyValuePair<GameObject, int>(child.gameObject, i++));
+                }
+
                 break;
             }
         }
@@ -84,8 +93,9 @@ public class LoadObject : MonoBehaviour
                 map.transform.position,
                 Quaternion.identity);
             figure.transform.parent = parent.transform;
+            figure.transform.localScale = new Vector3(0.5f, 0.5f, 0.5f);
 
-            GameInstance.SharedInstance.Players[i].Figures = new List<Figure>() { new Figure(figure) };
+            GameInstance.SharedInstance.Players[i].Figures = new List<KeyValuePair<Figure, int>>() { new KeyValuePair<Figure, int>(new Figure(figure), -1) };
         }
 
         Destroy(map.GetComponent<BoxCollider>());

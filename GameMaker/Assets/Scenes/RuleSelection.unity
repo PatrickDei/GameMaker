@@ -515,7 +515,7 @@ PrefabInstance:
     - target: {fileID: 558227225373564939, guid: b88c8dddd8c893e46b0587dccca25da5,
         type: 3}
       propertyPath: m_TagString
-      value: MovementStyle
+      value: Rule
       objectReference: {fileID: 0}
     - target: {fileID: 558227225373564940, guid: b88c8dddd8c893e46b0587dccca25da5,
         type: 3}
@@ -898,7 +898,7 @@ PrefabInstance:
     - target: {fileID: 558227225373564939, guid: b88c8dddd8c893e46b0587dccca25da5,
         type: 3}
       propertyPath: m_TagString
-      value: MovementStyle
+      value: Rule
       objectReference: {fileID: 0}
     - target: {fileID: 558227225373564940, guid: b88c8dddd8c893e46b0587dccca25da5,
         type: 3}

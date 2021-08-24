@@ -46,8 +46,9 @@ public class SelectionController : MonoBehaviour
                 NextSelectionStep("Object");
                 break;
 
-            case "MovementStyle":
-                SceneController.OnSceneLoad("Gameplay");
+            case "Rule":
+                ApplyRule(selectedObject);
+                NextSelectionStep("Rule");
                 break;
 
             default:
@@ -73,13 +74,25 @@ public class SelectionController : MonoBehaviour
         foreach (Transform child in buttonHolder.transform)
             GameObject.Destroy(child.gameObject);
 
-
         switch (RuleSelectionStep)
         {
             case 1:
-                GameObject newButton = Instantiate(Resources.Load<GameObject>("Prefabs/DefaultButton"), new Vector3(), Quaternion.identity);
-                newButton.transform.SetParent(buttonHolder.transform);
+                GameEnd endingConditions = GameInstance.GameParameters.GameEnd;
+                int i = 0;
+                List<string> conditions = endingConditions.Win.Concat(endingConditions.Lose).ToList();
+
+                foreach(var condition in conditions)
+                {
+                    GameObject o = Instantiate(Resources.Load<GameObject>("Prefabs/DefaultButton"), new Vector3(400f, 750f - i++ * 200f, 0), Quaternion.identity);
+                    o.name = condition;
+                    o.transform.GetChild(0).GetComponent<Text>().text = condition;
+                    o.transform.SetParent(buttonHolder.transform);
+                }
                 break;
+            case 2:
+                SceneController.OnSceneLoad("Gameplay");
+                break;
+
             default:
                 Debug.LogFormat("Rule selection steps have been de-synchronised. Current step: {0}", RuleSelectionStep);
                 break;
@@ -120,6 +133,25 @@ public class SelectionController : MonoBehaviour
                 break;
             default:
                 Debug.LogErrorFormat("Object selection steps have been de-synchronised. Current step: {0}", ObjectSelectionStep);
+                break;
+        }
+    }
+
+    private static void ApplyRule(GameObject selectedObject)
+    {
+        switch (RuleSelectionStep)
+        {
+            case 0:
+                Debug.LogFormat("Selected movement style: {0}", selectedObject.name);
+                GameInstance.SharedInstance.MovementStyle = selectedObject.name;
+                break;
+            case 1:
+                Debug.LogFormat("Selected game end condition: {0}", selectedObject.name);
+                GameInstance.SharedInstance.GameEndCondition = new KeyValuePair<string, bool>(selectedObject.name, GameInstance.GameParameters.GameEnd.Win.Contains(selectedObject.name));
+                break;
+
+            default:
+                Debug.LogError("Rule couldn't be applied!");
                 break;
         }
     }

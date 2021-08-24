@@ -6,20 +6,33 @@ using UnityEngine;
 public class Player
 {
     public string Name { get; set; }
-    public List<Figure> Figures { get; set; }
+    public List<KeyValuePair<Figure, int>> Figures { get; set; }
     public string FigureName { get; set; }
 
     public Player(string name = "player") { }
 
-    public Player(List<Figure> figures, string figure, string name = "player")
+    public Player(List<KeyValuePair<Figure, int>> figures, string figure, string name = "player")
     {
         Name = name;
         Figures = figures;
         FigureName = figure;
     }
 
-    public void MoveFigure(GameObject target)
+    // returns index if space was already occupied
+    public GameObject MoveFigure(GameObject target)
     {
-        Figures.First().MoveTo(target);
+        Figures.First().Key.MoveTo(target);
+        Debug.LogFormat("Number of fields: {0}", GameInstance.SharedInstance.Fields.Count);
+        int selectedIndex = GameInstance.SharedInstance.Fields.First(f => f.Key == target).Value;
+        Figures[0] = new KeyValuePair<Figure, int>(Figures.First().Key, selectedIndex);
+        Debug.Log(selectedIndex);
+        foreach (var player in GameInstance.SharedInstance.Players)
+            foreach (var figure in player.Figures)
+                if (figure.Value == selectedIndex && figure.Key != Figures[0].Key)
+                {
+                    player.Figures.Remove(new KeyValuePair<Figure, int>(figure.Key, figure.Value));
+                    return figure.Key.Figurine;
+                }
+        return null;
     }
 }
