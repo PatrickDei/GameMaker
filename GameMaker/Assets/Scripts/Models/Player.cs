@@ -6,6 +6,7 @@ using UnityEngine;
 public class Player
 {
     public string Name { get; set; }
+    // value of pair is index of field the piece is standing on
     public List<KeyValuePair<Figure, int>> Figures { get; set; }
     public string FigureName { get; set; }
 

@@ -74,9 +74,20 @@ public class SelectionController : MonoBehaviour
         foreach (Transform child in buttonHolder.transform)
             GameObject.Destroy(child.gameObject);
 
+        if (GameInstance.SharedInstance.MovementStyle == "Free movement")
+            RuleSelectionStep++;
+
         switch (RuleSelectionStep)
         {
-            case 1:
+            case 1:// transfer to gamecontroller and delegate to this class
+                Destroy(GameObject.Find(GameInstance.SharedInstance.MapName).GetComponent<OnClickObject>());
+                foreach(Transform child in GameObject.Find("Fields").transform)
+                {
+                    Debug.LogWarningFormat("REmoving for child: {0}", child.name);
+                    child.gameObject.GetComponent<OnClickObject>().anEvent.AddListener(SelectFieldForOrder);
+                }
+                break;
+            case 2:
                 GameEnd endingConditions = GameInstance.GameParameters.GameEnd;
                 int i = 0;
                 List<string> conditions = endingConditions.Win.Concat(endingConditions.Lose).ToList();
@@ -89,7 +100,7 @@ public class SelectionController : MonoBehaviour
                     o.transform.SetParent(buttonHolder.transform);
                 }
                 break;
-            case 2:
+            case 3:
                 SceneController.OnSceneLoad("Gameplay");
                 break;
 
@@ -154,5 +165,10 @@ public class SelectionController : MonoBehaviour
                 Debug.LogError("Rule couldn't be applied!");
                 break;
         }
+    }
+
+    public static void SelectFieldForOrder()
+    {
+        Debug.Log("works");
     }
 }

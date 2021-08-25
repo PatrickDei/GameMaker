@@ -35,6 +35,7 @@ public class GameInstance
 
     public string MapName;
     public string MovementStyle;
+    // value of pair marks wether it is win condition or lose condition
     public KeyValuePair<string, bool> GameEndCondition;
     public List<Player> Players;
     public List<KeyValuePair<GameObject, int>> Fields;
