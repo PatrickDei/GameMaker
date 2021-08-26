@@ -76,10 +76,10 @@ public class LoadObject : MonoBehaviour
 
                 if (GameInstance.SharedInstance.MovementStyle == "Free movement")
                 {
-                    GameInstance.SharedInstance.Fields = new List<KeyValuePair<GameObject, int>>();
+                    GameInstance.SharedInstance.Fields = new List<KeyValuePair<string, int>>();
                     int i = 0;
                     foreach (Transform child in map.transform.GetChild(0).transform)
-                        GameInstance.SharedInstance.Fields.Add(new KeyValuePair<GameObject, int>(child.gameObject, i++));
+                        GameInstance.SharedInstance.Fields.Add(new KeyValuePair<string, int>(child.gameObject.name, i++));
                 }
 
                 break;

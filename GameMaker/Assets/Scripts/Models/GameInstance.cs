@@ -38,7 +38,8 @@ public class GameInstance
     // value of pair marks wether it is win condition or lose condition
     public KeyValuePair<string, bool> GameEndCondition;
     public List<Player> Players;
-    public List<KeyValuePair<GameObject, int>> Fields;
+    // key marks the field name, value marks its position
+    public List<KeyValuePair<string, int>> Fields = null;
     private static int Turn = 0;
 
     public void MovePlayersFigure(GameObject target)

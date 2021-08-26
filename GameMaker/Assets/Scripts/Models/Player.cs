@@ -24,7 +24,7 @@ public class Player
     {
         Figures.First().Key.MoveTo(target);
         Debug.LogFormat("Number of fields: {0}", GameInstance.SharedInstance.Fields.Count);
-        int selectedIndex = GameInstance.SharedInstance.Fields.First(f => f.Key == target).Value;
+        int selectedIndex = GameInstance.SharedInstance.Fields.FirstOrDefault(f => f.Key == target.name).Value;
         Figures[0] = new KeyValuePair<Figure, int>(Figures.First().Key, selectedIndex);
         Debug.Log(selectedIndex);
         foreach (var player in GameInstance.SharedInstance.Players)

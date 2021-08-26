@@ -47,7 +47,8 @@ public class SelectionController : MonoBehaviour
                 break;
 
             case "Rule":
-                ApplyRule(selectedObject);
+                if(selectedObject.name != "DefaultButton")
+                    ApplyRule(selectedObject);
                 NextSelectionStep("Rule");
                 break;
 
@@ -80,12 +81,22 @@ public class SelectionController : MonoBehaviour
         switch (RuleSelectionStep)
         {
             case 1:// transfer to gamecontroller and delegate to this class
-                Destroy(GameObject.Find(GameInstance.SharedInstance.MapName).GetComponent<OnClickObject>());
+                Destroy(GameObject.Find(GameInstance.SharedInstance.MapName).GetComponent<BoxCollider>());
                 foreach(Transform child in GameObject.Find("Fields").transform)
                 {
-                    Debug.LogWarningFormat("REmoving for child: {0}", child.name);
-                    child.gameObject.GetComponent<OnClickObject>().anEvent.AddListener(SelectFieldForOrder);
+                    Destroy(child.gameObject.GetComponent<OnClickObject>());
+                    child.gameObject.AddComponent<FieldOrderSelector>();
                 }
+                GameInstance.SharedInstance.Fields = new List<KeyValuePair<string, int>>();
+
+                GameObject instructions = Instantiate(Resources.Load<GameObject>("Prefabs/DefaultMenuText"), new Vector3(400f, 750f, 0), Quaternion.identity);
+                instructions.name = "Instructions";
+                instructions.transform.GetComponent<Text>().text = "Select fields in order you wish to play with";
+                instructions.transform.SetParent(buttonHolder.transform);
+
+                GameObject continueButton = Instantiate(Resources.Load<GameObject>("Prefabs/DefaultButton"), new Vector3(1400f, 100f, 0), Quaternion.identity);
+                continueButton.transform.GetChild(0).GetComponent<Text>().text = "continue";
+                continueButton.transform.SetParent(buttonHolder.transform);
                 break;
             case 2:
                 GameEnd endingConditions = GameInstance.GameParameters.GameEnd;
@@ -157,6 +168,7 @@ public class SelectionController : MonoBehaviour
                 GameInstance.SharedInstance.MovementStyle = selectedObject.name;
                 break;
             case 1:
+            case 2:
                 Debug.LogFormat("Selected game end condition: {0}", selectedObject.name);
                 GameInstance.SharedInstance.GameEndCondition = new KeyValuePair<string, bool>(selectedObject.name, GameInstance.GameParameters.GameEnd.Win.Contains(selectedObject.name));
                 break;
