@@ -112,6 +112,7 @@ public class SelectionController : MonoBehaviour
                 }
                 break;
             case 3:
+            case 4:
                 SceneController.OnSceneLoad("Gameplay");
                 break;
 
