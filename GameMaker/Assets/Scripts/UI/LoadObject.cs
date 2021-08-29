@@ -57,6 +57,31 @@ public class LoadObject : MonoBehaviour
                 newObject.transform.rotation = Quaternion.AngleAxis(newObject.transform.rotation.x - 90, Vector3.right);
             newObject.name = obj.name;
         }
+
+        if(AddressablesGroup == "Maps")
+            foreach (var obj in Resources.LoadAll<GameObject>("Prefabs/Created Maps"))
+            {
+                GameObject newObject;
+
+                if (gameObject.scene.name == "LevelSelect")
+                {
+                    newObject = Instantiate(obj, new Vector3(-15f + i++ * 15f, 6.5f, 30), Quaternion.identity);
+                }
+                else if (obj.name == GameInstance.SharedInstance.MapName)
+                {
+                    newObject = Instantiate(obj, new Vector3(15f, -5f, 30), Quaternion.identity);
+                    newObject.transform.localScale = newObject.transform.localScale * 3;
+                }
+                else
+                    continue;
+
+                Debug.LogFormat("Parent is: {0}", target.name);
+                newObject.transform.SetParent(target.transform);
+                if (AddressablesGroup != "Figures")
+                    newObject.transform.rotation = Quaternion.AngleAxis(newObject.transform.rotation.x - 90, Vector3.right);
+                newObject.name = obj.name;
+                newObject.GetComponent<OnClickObject>().AddMapClickListener();
+            }
     }
 
     public void LoadChosenGameObjects(GameObject parent)
@@ -83,6 +108,31 @@ public class LoadObject : MonoBehaviour
                 }
 
                 break;
+            }
+        }
+        if (map == null)
+        {
+            GameObject obj = Resources.Load<GameObject>("Prefabs/Created Maps/" + GameInstance.SharedInstance.MapName);
+            map = Instantiate(obj, parent.transform.position, Quaternion.identity);
+            //map.transform.localScale = newObject.transform.localScale * 3;
+
+            Debug.LogFormat("Parent is: {0}", parent.name);
+            map.transform.SetParent(parent.transform);
+            map.transform.position = parent.transform.position;
+            map.name = obj.name;
+
+            foreach (Transform child in map.transform.GetChild(0).transform)
+            {
+                child.gameObject.AddComponent<OnClickObject>();
+                child.gameObject.GetComponent<OnClickObject>().AddFieldClickListener();
+            }
+
+            if (GameInstance.SharedInstance.MovementStyle == "Free movement")
+            {
+                GameInstance.SharedInstance.Fields = new List<KeyValuePair<string, int>>();
+                int i = 0;
+                foreach (Transform child in map.transform.GetChild(0).transform)
+                    GameInstance.SharedInstance.Fields.Add(new KeyValuePair<string, int>(child.gameObject.name, i++));
             }
         }
 

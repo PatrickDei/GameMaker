@@ -7,8 +7,16 @@ public class MapObjectCreator : MonoBehaviour
 
     public void AddObject()
     {
-        GameObject newObject = GameObject.CreatePrimitive((gameObject.name == "Cube") ? PrimitiveType.Cube : PrimitiveType.Sphere);
-        newObject.transform.position = GameObject.Find("Plane").transform.position;
-        FieldPosition.target = newObject;
+        if (FieldPosition.target == null)
+        {
+            GameObject newObject = GameObject.CreatePrimitive((gameObject.name == "Cube") ? PrimitiveType.Cube : PrimitiveType.Sphere);
+            newObject.transform.position = GameObject.Find("Plane").transform.position;
+            FieldPosition.target = newObject;
+        }
+    }
+
+    public static void GetBounds(GameObject map)
+    {
+        
     }
 }
