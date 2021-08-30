@@ -36,9 +36,9 @@ public class SelectionController : MonoBehaviour
                     GameInstance.SharedInstance.Players[SelectedFigureCount - 1].FigureName = selectedObject.name;
 
                     if (SelectedFigureCount == GameInstance.SharedInstance.Players.Count)
-                        SceneController.OnSceneLoad("RuleSelection");
+                        NextObjectSelectionStep();
 
-                    GameObject.Find("ProgressText").GetComponent<Text>().text = "Choose the figure for player " + (SelectedFigureCount + 1).ToString();
+                    GameObject.Find("ProgressText").GetComponent<Text>().text = "Choose the figure texture for player " + (SelectedFigureCount + 1).ToString();
                 }
                 break;
 
@@ -131,6 +131,7 @@ public class SelectionController : MonoBehaviour
         foreach (Transform child in buttonHolder.transform)
             GameObject.Destroy(child.gameObject);
 
+        Debug.LogFormat("Object selection step: {0}", ObjectSelectionStep);
 
         switch (ObjectSelectionStep)
         {
@@ -141,8 +142,6 @@ public class SelectionController : MonoBehaviour
                 break;
 
             case 2:
-                Destroy(GameObject.Find("PlayerNumber"));
-
                 GameInstance.SharedInstance.Players = new List<Player>();
                 for (int i = 1; i <= Int32.Parse(GameObject.Find("ChosenPlayerNum").GetComponent<Text>().text); i++)
                     GameInstance.SharedInstance.Players.Add(new Player("Player " + i));
@@ -152,7 +151,24 @@ public class SelectionController : MonoBehaviour
                 loader.GetComponent<LoadObject>().AddressablesGroup = "Figures";
                 loader.GetComponent<LoadObject>().enabled = true;
 
-                GameObject.Find("ProgressText").GetComponent<Text>().text = "Choose the figure for player 1";
+                GameObject.Find("ProgressText").GetComponent<Text>().text = "Choose the figure texture for player 1";
+
+                GameObject.Find("PlayerNumber").SetActive(false);
+
+                break;
+
+            case 3:
+                GameObject obj = Resources.FindObjectsOfTypeAll<GameObject>().First(n => n.name == "PlayerNumber");
+                obj.SetActive(true);
+                obj.transform.GetChild(0).GetComponent<Text>().text = "Number of figures";
+                GameObject.Find("ChosenPlayerNum").GetComponent<Text>().text = "";
+                GameObject.Find("ProgressText").GetComponent<Text>().text = "Choose number of figures per player";
+                break;
+
+            case 4:
+                Debug.Log("Number of figures chosen");
+                GameInstance.SharedInstance.numOfFiguresPerPlayer = Int32.Parse(GameObject.Find("ChosenPlayerNum").GetComponent<Text>().text);
+                SceneController.OnSceneLoad("RuleSelection");
                 break;
             default:
                 Debug.LogErrorFormat("Object selection steps have been de-synchronised. Current step: {0}", ObjectSelectionStep);

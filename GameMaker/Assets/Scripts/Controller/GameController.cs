@@ -13,12 +13,20 @@ public class GameController : MonoBehaviour
         Debug.LogFormat("Selected field: {0}", field);
         if (GameInstance.SharedInstance.Fields.FirstOrDefault(f => f.Key == field.name).Key != null)
             GameInstance.SharedInstance.MovePlayersFigure(field);
-        else
+        else {
             Debug.LogWarning("Invalid move");
+            return;
+        }
+
         if (!GameInstance.SharedInstance.GameEndCondition.Value && GameInstance.SharedInstance.GameEndCondition.Key == "No figures left")
             foreach (var player in GameInstance.SharedInstance.Players)
                 if (player.Figures.Count == 0)
-                    Debug.LogError("GameOver!");
+                    TriggerGameLost(player);
+
+        if (GameInstance.SharedInstance.GameEndCondition.Value && GameInstance.SharedInstance.GameEndCondition.Key == "Reach goal")
+            if (GameInstance.SharedInstance.winningField && GameInstance.SharedInstance.winningField == field)
+                TriggerGameWon(GameInstance.SharedInstance.Players[GameInstance.SharedInstance.PlayerIndex - 1]);
+
     }
 
     public void ChangeFollowCubeAmount()
@@ -40,7 +48,8 @@ public class GameController : MonoBehaviour
                     GameInstance.SharedInstance.Fields[
                         (GameInstance.SharedInstance
                             .Players[GameInstance.SharedInstance.PlayerIndex]
-                            .Figures[0].Value + diceValue) % GameInstance.SharedInstance.Fields.Count
+                            .Figures[0].Value + diceValue
+                        ) % GameInstance.SharedInstance.Fields.Count
                     ].Key
                 );
 
@@ -48,13 +57,20 @@ public class GameController : MonoBehaviour
         }
     }
 
-    void TriggerGameLost(Player loser)
+    static void TriggerGameLost(Player loser)
     {
-
+        ActivateGameOverText();
+        GameObject.Find("Subtitle").GetComponent<Text>().text = loser.Name + " lost!";
     }
 
-    void TriggerGameWon(Player winner)
+    static void TriggerGameWon(Player winner)
     {
+        ActivateGameOverText();
+        GameObject.Find("Subtitle").GetComponent<Text>().text = winner.Name + " won!";
+    }
 
+    static void ActivateGameOverText()
+    {
+        GameObject.Find("Game Over").SetActive(true);
     }
 }

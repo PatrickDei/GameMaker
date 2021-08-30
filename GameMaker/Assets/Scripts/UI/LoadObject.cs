@@ -41,7 +41,7 @@ public class LoadObject : MonoBehaviour
 
             if (gameObject.scene.name == "LevelSelect")
             {
-                newObject = Instantiate(obj, new Vector3(-15f + i++ * 15f, 6.5f, 30), Quaternion.identity);
+                newObject = Instantiate(obj, new Vector3(-30f + i++ * 15f, 6.5f, 30), Quaternion.identity);
             }
             else if (obj.name == GameInstance.SharedInstance.MapName)
             {
@@ -65,7 +65,7 @@ public class LoadObject : MonoBehaviour
 
                 if (gameObject.scene.name == "LevelSelect")
                 {
-                    newObject = Instantiate(obj, new Vector3(-15f + i++ * 15f, 6.5f, 30), Quaternion.identity);
+                    newObject = Instantiate(obj, new Vector3(-30f + i++ * 15f, 6.5f, 30), Quaternion.identity);
                 }
                 else if (obj.name == GameInstance.SharedInstance.MapName)
                 {
@@ -138,14 +138,16 @@ public class LoadObject : MonoBehaviour
 
         for (int i = 0; i < GameInstance.SharedInstance.Players.Count; i++)
         {
-            GameObject figure = Instantiate(
-                Resources.Load<GameObject>("prefabs/" + GameInstance.SharedInstance.Players[i].FigureName),
-                map.transform.position,
-                Quaternion.identity);
-            figure.transform.parent = parent.transform;
-            figure.transform.localScale = new Vector3(0.5f, 0.5f, 0.5f);
+            for (int j = 0; j < GameInstance.SharedInstance.numOfFiguresPerPlayer; j++) {
+                GameObject figure = Instantiate(
+                    Resources.Load<GameObject>("prefabs/" + GameInstance.SharedInstance.Players[i].FigureName),
+                    map.transform.position,
+                    Quaternion.identity);
+                figure.transform.parent = parent.transform;
+                figure.transform.localScale = new Vector3(0.5f, 0.5f, 0.5f);
 
-            GameInstance.SharedInstance.Players[i].Figures = new List<KeyValuePair<Figure, int>>() { new KeyValuePair<Figure, int>(new Figure(figure), -1) };
+                GameInstance.SharedInstance.Players[i].Figures = new List<KeyValuePair<Figure, int>>() { new KeyValuePair<Figure, int>(new Figure(figure), -1) };
+            }
         }
 
         Destroy(map.GetComponent<BoxCollider>());
