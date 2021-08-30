@@ -36,6 +36,11 @@ public class OnClickObject : MonoBehaviour
     {
         GameController.TryMoveFigure(gameObject);
     }
+    public void SelectFigure()
+    {
+        Debug.LogFormat("Figure selected: {0}", gameObject.name);
+        GameController.selectedFigure = gameObject;
+    }
 
     public void FinishMap()
     {
@@ -71,5 +76,12 @@ public class OnClickObject : MonoBehaviour
     {
         anEvent = new UnityEvent();
         anEvent.AddListener(SelectField);
+    }
+
+    public void AddFigureClickListener()
+    {
+        Debug.Log(gameObject.name);
+        anEvent = new UnityEvent();
+        anEvent.AddListener(SelectFigure);
     }
 }

@@ -143,9 +143,11 @@ public class SelectionController : MonoBehaviour
 
             case 2:
                 GameInstance.SharedInstance.Players = new List<Player>();
+                
                 for (int i = 1; i <= Int32.Parse(GameObject.Find("ChosenPlayerNum").GetComponent<Text>().text); i++)
                     GameInstance.SharedInstance.Players.Add(new Player("Player " + i));
 
+                Debug.LogFormat("Amount of players: {0}", GameInstance.SharedInstance.Players.Count);
                 GameObject loader = GameObject.Find("Loader script");
                 loader.GetComponent<LoadObject>().enabled = false;
                 loader.GetComponent<LoadObject>().AddressablesGroup = "Figures";

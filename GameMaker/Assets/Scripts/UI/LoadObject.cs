@@ -13,6 +13,7 @@ public class LoadObject : MonoBehaviour
     [SerializeField] UnityEvent anEvent;
     [SerializeField] public string AddressablesGroup;
     private IList<GameObject> prefabs;
+    private List<string> names = new List<string>();
 
     public void OnEnable()
     {
@@ -138,15 +139,22 @@ public class LoadObject : MonoBehaviour
 
         for (int i = 0; i < GameInstance.SharedInstance.Players.Count; i++)
         {
+            GameInstance.SharedInstance.Players[i].Figures = new List<KeyValuePair<Figure, int>>();
             for (int j = 0; j < GameInstance.SharedInstance.numOfFiguresPerPlayer; j++) {
                 GameObject figure = Instantiate(
                     Resources.Load<GameObject>("prefabs/" + GameInstance.SharedInstance.Players[i].FigureName),
                     map.transform.position,
                     Quaternion.identity);
+                figure.transform.position = new Vector3(4f + 1f * j, map.transform.position.y, -6f - 1f * i);
                 figure.transform.parent = parent.transform;
                 figure.transform.localScale = new Vector3(0.5f, 0.5f, 0.5f);
+                string name = UnityEditor.ObjectNames.GetUniqueName(names.ToArray(), figure.name);
+                figure.name = name;
+                names.Add(figure.name);
 
-                GameInstance.SharedInstance.Players[i].Figures = new List<KeyValuePair<Figure, int>>() { new KeyValuePair<Figure, int>(new Figure(figure), -1) };
+                figure.gameObject.GetComponent<OnClickObject>().AddFigureClickListener();
+
+                GameInstance.SharedInstance.Players[i].Figures.Add(new KeyValuePair<Figure, int>(new Figure(figure), -1));
             }
         }
 

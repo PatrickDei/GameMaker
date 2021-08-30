@@ -45,6 +45,13 @@ MonoBehaviour:
     - Maps
     m_MainAsset: {fileID: 0}
     m_TargetAsset: {fileID: 0}
+  - m_GUID: c08898b10720fcc4ea471576d67ef047
+    m_Address: Assets/Prefabs/Figures/Three.prefab
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - Figures
+    m_MainAsset: {fileID: 0}
+    m_TargetAsset: {fileID: 0}
   - m_GUID: d0b75cd3acf36034684b81e20c88e51f
     m_Address: Assets/Prefabs/Figures/Two.prefab
     m_ReadOnly: 0

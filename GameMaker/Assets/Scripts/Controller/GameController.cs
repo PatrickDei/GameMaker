@@ -7,11 +7,12 @@ using UnityEngine.UI;
 public class GameController : MonoBehaviour
 {
     [SerializeField] GameObject diceCount;
+    public static GameObject selectedFigure = null;
 
     public static void TryMoveFigure(GameObject field)
     {
         Debug.LogFormat("Selected field: {0}", field);
-        if (GameInstance.SharedInstance.Fields.FirstOrDefault(f => f.Key == field.name).Key != null)
+        if (selectedFigure && GameInstance.SharedInstance.Fields.FirstOrDefault(f => f.Key == field.name).Key != null)
             GameInstance.SharedInstance.MovePlayersFigure(field);
         else {
             Debug.LogWarning("Invalid move");
@@ -71,6 +72,7 @@ public class GameController : MonoBehaviour
 
     static void ActivateGameOverText()
     {
-        GameObject.Find("Game Over").SetActive(true);
+        GameObject obj = Resources.FindObjectsOfTypeAll<GameObject>().First(n => n.name == "Game Over");
+        obj.SetActive(true);
     }
 }

@@ -55,6 +55,15 @@ public class GameInstance
 
     public void MovePlayersFigure(GameObject target)
     {
-        Object.Destroy(Players[Turn++ % Players.Count].MoveFigure(target));
+        Player selectedPlayer = null;
+        foreach (Player p in Players)
+            foreach (var figure in p.Figures)
+                if (figure.Key.Figurine.name == GameController.selectedFigure.name)
+                    selectedPlayer = p;
+
+        if (selectedPlayer != null)
+            Object.Destroy(selectedPlayer.MoveFigure(target));
+        else
+            Debug.LogError("Couldn't recognise figure, select it once more!");
     }
 }
