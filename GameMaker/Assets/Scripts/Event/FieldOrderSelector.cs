@@ -9,7 +9,7 @@ public class FieldOrderSelector : MonoBehaviour
 
     public void Start()
     {
-        selectionEvent.AddListener(TestMethod);
+        selectionEvent.AddListener(ChooseAsNext);
     }
 
     void OnMouseDown()
@@ -17,8 +17,9 @@ public class FieldOrderSelector : MonoBehaviour
         selectionEvent.Invoke();
     }
 
-    void TestMethod()
+    void ChooseAsNext()
     {
+        gameObject.GetComponent<Renderer>().material.color = Color.green;
         GameInstance.SharedInstance.Fields.Add(new KeyValuePair<string, int>(gameObject.name, GameInstance.SharedInstance.Fields.Count)); 
         Debug.LogFormat("Field {0} selected as field {1}", gameObject.name, GameInstance.SharedInstance.Fields.Count);
     }

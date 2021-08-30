@@ -33,6 +33,14 @@ public class GameInstance
         }
     }
 
+    public int PlayerIndex
+    {
+        get
+        {
+            return Turn % Players.Count;
+        }
+    }
+
     public string MapName;
     public string MovementStyle;
     // value of pair marks wether it is win condition or lose condition
@@ -41,6 +49,7 @@ public class GameInstance
     // key marks the field name, value marks its position
     public List<KeyValuePair<string, int>> Fields = null;
     private static int Turn = 0;
+    public bool cubeIsFollowed = false;
 
     public void MovePlayersFigure(GameObject target)
     {

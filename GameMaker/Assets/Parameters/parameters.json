@@ -4,7 +4,7 @@
         "Reach goal"
       ],
       "Lose": [
-        "Amount of figures left"
+        "No figures left"
       ]
     }
 }
