@@ -38,7 +38,8 @@ public class SelectionController : MonoBehaviour
                     if (SelectedFigureCount == GameInstance.SharedInstance.Players.Count)
                         NextObjectSelectionStep();
 
-                    GameObject.Find("ProgressText").GetComponent<Text>().text = "Choose the figure texture for player " + (SelectedFigureCount + 1).ToString();
+                    else
+                        GameObject.Find("ProgressText").GetComponent<Text>().text = "Choose the figure texture for player " + (SelectedFigureCount + 1).ToString();
                 }
                 break;
 
@@ -185,7 +186,7 @@ public class SelectionController : MonoBehaviour
                 GameObject obj = Resources.FindObjectsOfTypeAll<GameObject>().First(n => n.name == "PlayerNumber");
                 obj.SetActive(true);
                 obj.transform.GetChild(0).GetComponent<Text>().text = "Number of figures";
-                GameObject.Find("ChosenPlayerNum").GetComponent<Text>().text = "";
+                GameObject.Find("ChosenPlayerNum").GetComponent<Text>().text = String.Empty;
                 GameObject.Find("ProgressText").GetComponent<Text>().text = "Choose number of figures per player";
                 break;
 

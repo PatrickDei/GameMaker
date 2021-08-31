@@ -37,6 +37,11 @@ public class GameController : MonoBehaviour
 
     }
 
+    public void ChangeDestroyFiguresOnSameFields()
+    {
+        GameInstance.SharedInstance.DestroyingFigures = !GameInstance.SharedInstance.DestroyingFigures;
+    }
+
     public void ChangeFollowCubeAmount()
     {
         GameInstance.SharedInstance.cubeIsFollowed = !GameInstance.SharedInstance.cubeIsFollowed;

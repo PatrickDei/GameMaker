@@ -6,6 +6,7 @@ using UnityEngine.AddressableAssets;
 using UnityEngine.ResourceManagement.AsyncOperations;
 using System.Linq;
 using System.Reflection;
+using UnityEngine.UI;
 
 public class LoadObject : MonoBehaviour
 {
@@ -165,6 +166,33 @@ public class LoadObject : MonoBehaviour
         Destroy(map.GetComponent<BoxCollider>());
         Destroy(map.GetComponent<OnClickObject>());
         Debug.Log("Component deleted on parent!");
+
+        //LoadPlayerStats();
+    }
+    
+    void LoadPlayerStats()
+    {
+        GameObject statsHolder = GameObject.Find("Status");
+        GameObject playerInstance = statsHolder.transform.GetChild(0).gameObject;
+
+        int i = 0;
+        foreach(Player player in GameInstance.SharedInstance.Players)
+        {
+            GameObject newPlayer = Instantiate(playerInstance,
+                new Vector3(statsHolder.transform.position.x + 725, statsHolder.transform.position.y + (i++ * -100), statsHolder.transform.position.z), 
+                Quaternion.identity);
+            newPlayer.name = player.Name;
+            newPlayer.transform.SetParent(statsHolder.transform);
+            newPlayer.transform.GetChild(0).gameObject.GetComponent<Text>().text = player.Name;
+
+            GameObject figurine = Instantiate(Resources.Load<GameObject>("Prefabs/" + player.FigureName), newPlayer.transform.GetChild(0).position, Quaternion.identity);
+            figurine.name = player.FigureName;
+            figurine.transform.SetParent(newPlayer.transform.GetChild(1).transform, false);
+            //figurine.transform.localScale = figurine.transform.localScale * 30;
+            Destroy(figurine.GetComponent<CapsuleCollider>());
+        }
+
+        Destroy(playerInstance);
     }
 
     private Component CopyComponent(Component original, GameObject destination)

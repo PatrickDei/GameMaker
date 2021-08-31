@@ -33,18 +33,17 @@ public class Player
                 break;
         Figures[i] = new KeyValuePair<Figure, int>(Figures.First(f => f.Key.Figurine.name == GameController.selectedFigure.name).Key, selectedIndex);
 
-        Debug.Log(selectedIndex);
-
-        foreach (var player in GameInstance.SharedInstance.Players)
-            foreach (var figure in player.Figures)
-            {
-                if (figure.Value == selectedIndex && figure.Key != Figures[i].Key)
+        if(GameInstance.SharedInstance.DestroyingFigures)
+            foreach (var player in GameInstance.SharedInstance.Players)
+                foreach (var figure in player.Figures)
                 {
-                    Debug.LogWarning("Figure eaten");
-                    player.Figures.Remove(new KeyValuePair<Figure, int>(figure.Key, figure.Value));
-                    return figure.Key.Figurine;
+                    if (figure.Value == selectedIndex && figure.Key != Figures[i].Key)
+                    {
+                        Debug.LogWarning("Figure eaten");
+                        player.Figures.Remove(new KeyValuePair<Figure, int>(figure.Key, figure.Value));
+                        return figure.Key.Figurine;
+                    }
                 }
-            }
         return null;
     }
 }
