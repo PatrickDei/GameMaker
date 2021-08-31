@@ -25,8 +25,15 @@ public class GameController : MonoBehaviour
                     TriggerGameLost(player);
 
         if (GameInstance.SharedInstance.GameEndCondition.Value && GameInstance.SharedInstance.GameEndCondition.Key == "Reach goal")
-            if (GameInstance.SharedInstance.winningField && GameInstance.SharedInstance.winningField == field)
-                TriggerGameWon(GameInstance.SharedInstance.Players[GameInstance.SharedInstance.PlayerIndex - 1]);
+            if (GameInstance.SharedInstance.WiningFields.Contains(field.name))
+            {
+                Player winner = null;
+                foreach (Player p in GameInstance.SharedInstance.Players)
+                    foreach (var f in p.Figures)
+                        if (f.Key.Figurine == selectedFigure)
+                            winner = p;
+                TriggerGameWon(winner);
+            }
 
     }
 

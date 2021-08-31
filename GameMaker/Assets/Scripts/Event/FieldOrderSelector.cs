@@ -19,7 +19,7 @@ public class FieldOrderSelector : MonoBehaviour
 
     void ChooseAsNext()
     {
-        gameObject.GetComponent<Renderer>().material.color = Color.green;
+        gameObject.GetComponent<Renderer>().material.color = Color.yellow;
         GameInstance.SharedInstance.Fields.Add(new KeyValuePair<string, int>(gameObject.name, GameInstance.SharedInstance.Fields.Count)); 
         Debug.LogFormat("Field {0} selected as field {1}", gameObject.name, GameInstance.SharedInstance.Fields.Count);
     }

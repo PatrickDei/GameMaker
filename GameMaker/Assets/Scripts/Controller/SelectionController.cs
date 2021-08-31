@@ -47,7 +47,7 @@ public class SelectionController : MonoBehaviour
                 break;
 
             case "Rule":
-                if(selectedObject.name != "DefaultButton")
+                if(selectedObject.name != "DefaultButton" && selectedObject.name != "DefaultButton(Clone)")
                     ApplyRule(selectedObject);
                 NextSelectionStep("Rule");
                 break;
@@ -75,13 +75,18 @@ public class SelectionController : MonoBehaviour
         foreach (Transform child in buttonHolder.transform)
             GameObject.Destroy(child.gameObject);
 
-        if (GameInstance.SharedInstance.MovementStyle == "Free movement")
+        if (GameInstance.SharedInstance.MovementStyle == "Free movement" && RuleSelectionStep == 1)
             RuleSelectionStep++;
+
+        if (GameInstance.SharedInstance.GameEndCondition.Key != "Reach goal" && RuleSelectionStep == 3)
+            RuleSelectionStep++;
+        Debug.LogWarningFormat("Ruleselectionstep: {0} ... {1}", RuleSelectionStep, GameInstance.SharedInstance.GameEndCondition.Key);
+
+        Destroy(GameObject.Find(GameInstance.SharedInstance.MapName).GetComponent<BoxCollider>());
 
         switch (RuleSelectionStep)
         {
             case 1:// transfer to gamecontroller and delegate to this class
-                Destroy(GameObject.Find(GameInstance.SharedInstance.MapName).GetComponent<BoxCollider>());
                 foreach(Transform child in GameObject.Find("Fields").transform)
                 {
                     Destroy(child.gameObject.GetComponent<OnClickObject>());
@@ -89,7 +94,7 @@ public class SelectionController : MonoBehaviour
                 }
                 GameInstance.SharedInstance.Fields = new List<KeyValuePair<string, int>>();
 
-                GameObject instructions = Instantiate(Resources.Load<GameObject>("Prefabs/DefaultMenuText"), new Vector3(400f, 750f, 0), Quaternion.identity);
+                GameObject instructions = Instantiate(Resources.Load<GameObject>("Prefabs/DefaultMenuText"), new Vector3(600f, 750f, 0), Quaternion.identity);
                 instructions.name = "Instructions";
                 instructions.transform.GetComponent<Text>().text = "Select fields in order you wish to play with";
                 instructions.transform.SetParent(buttonHolder.transform);
@@ -112,7 +117,24 @@ public class SelectionController : MonoBehaviour
                 }
                 break;
             case 3:
+                foreach (Transform child in GameObject.Find("Fields").transform)
+                {
+                    Destroy(child.gameObject.GetComponent<FieldOrderSelector>());
+                    child.gameObject.AddComponent<GoalFieldSelector>();
+                }
+
+                GameObject newInstructions = Instantiate(Resources.Load<GameObject>("Prefabs/DefaultMenuText"), new Vector3(600f, 750f, 0), Quaternion.identity);
+                newInstructions.name = "Instructions";
+                newInstructions.transform.GetComponent<Text>().text = "Select fields you win if you step on";
+                newInstructions.transform.SetParent(buttonHolder.transform);
+
+                GameObject continueToGameButton = Instantiate(Resources.Load<GameObject>("Prefabs/DefaultButton"), new Vector3(1400f, 100f, 0), Quaternion.identity);
+                continueToGameButton.transform.GetChild(0).GetComponent<Text>().text = "continue";
+                continueToGameButton.transform.SetParent(buttonHolder.transform);
+                break;
+
             case 4:
+            case 5:
                 SceneController.OnSceneLoad("Gameplay");
                 break;
 
@@ -196,10 +218,5 @@ public class SelectionController : MonoBehaviour
                 Debug.LogError("Rule couldn't be applied!");
                 break;
         }
-    }
-
-    public static void SelectFieldForOrder()
-    {
-        Debug.Log("works");
     }
 }

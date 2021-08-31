@@ -158,6 +158,10 @@ public class LoadObject : MonoBehaviour
             }
         }
 
+        foreach(Transform field in map.transform.GetChild(0).transform)
+            if(GameInstance.SharedInstance.WiningFields.Contains(field.name))
+                field.gameObject.GetComponent<Renderer>().material.color = Color.green;
+
         Destroy(map.GetComponent<BoxCollider>());
         Destroy(map.GetComponent<OnClickObject>());
         Debug.Log("Component deleted on parent!");

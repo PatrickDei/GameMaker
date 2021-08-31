@@ -50,8 +50,8 @@ public class GameInstance
     public List<KeyValuePair<string, int>> Fields = null;
     private static int Turn = 0;
     public bool cubeIsFollowed = false;
-    public GameObject winningField = null;
     public int numOfFiguresPerPlayer;
+    public List<string> WiningFields = new List<string>();
 
     public void MovePlayersFigure(GameObject target)
     {
