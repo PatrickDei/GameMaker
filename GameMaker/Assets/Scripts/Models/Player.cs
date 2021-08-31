@@ -38,7 +38,6 @@ public class Player
         foreach (var player in GameInstance.SharedInstance.Players)
             foreach (var figure in player.Figures)
             {
-                Debug.Log(figure.Value);
                 if (figure.Value == selectedIndex && figure.Key != Figures[i].Key)
                 {
                     Debug.LogWarning("Figure eaten");

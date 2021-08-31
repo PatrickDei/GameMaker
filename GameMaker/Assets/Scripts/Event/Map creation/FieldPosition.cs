@@ -32,5 +32,12 @@ public class FieldPosition : MonoBehaviour
 
             target = null;
         }
+        float scrollAmount = Input.GetAxis("Mouse ScrollWheel");
+
+        if (target && scrollAmount != 0)
+        {
+            float delta = (scrollAmount > 0) ? 0.1f : -0.1f;
+            target.transform.localScale = new Vector3(target.transform.localScale.x + delta, target.transform.localScale.y + delta, target.transform.localScale.z + delta);
+        }
     }
 }
