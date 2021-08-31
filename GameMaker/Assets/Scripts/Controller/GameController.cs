@@ -45,16 +45,23 @@ public class GameController : MonoBehaviour
 
         if (GameInstance.SharedInstance.cubeIsFollowed)
         {
-            GameObject nextField = GameObject.Find(
-                    GameInstance.SharedInstance.Fields[
-                        (GameInstance.SharedInstance
-                            .Players[GameInstance.SharedInstance.PlayerIndex]
-                            .Figures[0].Value + diceValue
-                        ) % GameInstance.SharedInstance.Fields.Count
-                    ].Key
-                );
+            int figuresField = -1;
+            foreach(Player p in GameInstance.SharedInstance.Players)
+                foreach(var f in p.Figures)
+                {
+                    if (f.Key.Figurine == selectedFigure)
+                        figuresField = f.Value;
+                }
+            if (figuresField != -1)
+            {
+                GameObject nextField = GameObject.Find(
+                        GameInstance.SharedInstance.Fields[(figuresField + diceValue) 
+                        % GameInstance.SharedInstance.Fields.Count]
+                        .Key
+                    );
 
-            TryMoveFigure(nextField);
+                TryMoveFigure(nextField);
+            }
         }
     }
 
