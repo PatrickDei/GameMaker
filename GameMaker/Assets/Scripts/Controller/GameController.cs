@@ -41,6 +41,16 @@ public class GameController : MonoBehaviour
                 TriggerGameWon(winner);
             }
 
+        if (GameInstance.SharedInstance.GameEndCondition.Value && GameInstance.SharedInstance.GameEndCondition.Key == "Points scored")
+        {
+            Player winner = null;
+            foreach (Player p in GameInstance.SharedInstance.Players)
+                if (p.Points >= GameInstance.SharedInstance.ScoreToWin)
+                    winner = p;
+            if(winner != null)
+                TriggerGameWon(winner);
+        }
+
     }
 
     public void ChangeDestroyFiguresOnSameFields()

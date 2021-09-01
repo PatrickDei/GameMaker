@@ -54,6 +54,9 @@ public class GameInstance
     public List<string> WiningFields = new List<string>();
     public List<string> LethalFields = new List<string>();
     public bool DestroyingFigures = true;
+    public int ScoreToWin = -1;
+    public List<string> ScoringFields = new List<string>();
+    public List<Star> Stars = new List<Star>();
 
     public void MovePlayersFigure(GameObject target)
     {
@@ -73,6 +76,32 @@ public class GameInstance
             if (LethalFields.Contains(target.name)) {
                 selectedPlayer.Figures.Remove(selectedPlayer.Figures.First(f => f.Key.Figurine == GameController.selectedFigure));
                 Object.Destroy(GameController.selectedFigure);
+            }
+
+            if (ScoringFields.Contains(target.name))
+            {
+                selectedPlayer.Points++;
+
+                Star star = Stars.First(s => s.FieldName == target.name);
+
+                bool canPlace = true;
+
+                foreach (var field in Fields)
+                    if (!LethalFields.Contains(field.Key) && !ScoringFields.Contains(field.Key))
+                    {
+                        foreach (var player in Players)
+                            foreach (var figure in player.Figures)
+                                if (figure.Key.Figurine.name == field.Key)
+                                    canPlace = false;
+                        if (canPlace)
+                        {
+                            star.MoveTo(GameObject.Find(field.Key));
+                            ScoringFields.Remove(star.FieldName);
+                            star.FieldName = field.Key;
+                            ScoringFields.Add(star.FieldName);
+                            break;
+                        }
+                    }
             }
         }
         else

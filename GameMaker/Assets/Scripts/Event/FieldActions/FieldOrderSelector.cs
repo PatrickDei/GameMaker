@@ -3,21 +3,9 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Events;
 
-public class FieldOrderSelector : MonoBehaviour
+public class FieldOrderSelector : FieldSelector
 {
-    UnityEvent selectionEvent = new UnityEvent();
-
-    public void Start()
-    {
-        selectionEvent.AddListener(ChooseAsNext);
-    }
-
-    void OnMouseDown()
-    {
-        selectionEvent.Invoke();
-    }
-
-    void ChooseAsNext()
+    protected override void Choose()
     {
         gameObject.GetComponent<Renderer>().material.color = Color.yellow;
         GameInstance.SharedInstance.Fields.Add(new KeyValuePair<string, int>(gameObject.name, GameInstance.SharedInstance.Fields.Count)); 

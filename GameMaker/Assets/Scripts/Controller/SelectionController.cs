@@ -81,6 +81,10 @@ public class SelectionController : MonoBehaviour
 
         if (GameInstance.SharedInstance.GameEndCondition.Key != "Reach goal" && RuleSelectionStep == 3)
             RuleSelectionStep++;
+
+        if (GameInstance.SharedInstance.GameEndCondition.Key != "Points scored" && RuleSelectionStep == 4)
+            RuleSelectionStep += 2;
+
         Debug.LogWarningFormat("Ruleselectionstep: {0} ... {1}", RuleSelectionStep, GameInstance.SharedInstance.GameEndCondition.Key);
 
         Destroy(GameObject.Find(GameInstance.SharedInstance.MapName).GetComponent<BoxCollider>());
@@ -104,6 +108,7 @@ public class SelectionController : MonoBehaviour
                 continueButton.transform.GetChild(0).GetComponent<Text>().text = "continue";
                 continueButton.transform.SetParent(buttonHolder.transform);
                 break;
+
             case 2:
                 GameEnd endingConditions = GameInstance.GameParameters.GameEnd;
                 int i = 0;
@@ -117,8 +122,12 @@ public class SelectionController : MonoBehaviour
                     o.transform.SetParent(buttonHolder.transform);
                 }
                 break;
+            
+            // ordering
             case 3:
-                foreach (Transform child in GameObject.Find("Fields").transform)
+                GameObject fieldHolder = GameObject.Find("Fields");
+                
+                foreach (Transform child in fieldHolder.transform)
                 {
                     Destroy(child.gameObject.GetComponent<FieldOrderSelector>());
                     child.gameObject.AddComponent<GoalFieldSelector>();
@@ -129,15 +138,57 @@ public class SelectionController : MonoBehaviour
                 newInstructions.transform.GetComponent<Text>().text = "Select fields you win if you step on";
                 newInstructions.transform.SetParent(buttonHolder.transform);
 
+
                 GameObject continueToLethal = Instantiate(Resources.Load<GameObject>("Prefabs/DefaultButton"), new Vector3(1400f, 100f, 0), Quaternion.identity);
                 continueToLethal.transform.GetChild(0).GetComponent<Text>().text = "continue";
                 continueToLethal.transform.SetParent(buttonHolder.transform);
                 break;
 
+            // stars selection
             case 4:
                 foreach (Transform child in GameObject.Find("Fields").transform)
                 {
                     Destroy(child.gameObject.GetComponent<GoalFieldSelector>());
+                    Destroy(child.gameObject.GetComponent<FieldOrderSelector>());
+                    child.gameObject.AddComponent<ScoreFieldSelector>();
+                }
+
+                GameObject newerInstructions = Instantiate(Resources.Load<GameObject>("Prefabs/DefaultMenuText"), new Vector3(600f, 750f, 0), Quaternion.identity);
+                newerInstructions.name = "Instructions";
+                newerInstructions.transform.GetComponent<Text>().text = "Select fields that start with stars";
+                newerInstructions.transform.SetParent(buttonHolder.transform);
+
+
+                GameObject continueToinput = Instantiate(Resources.Load<GameObject>("Prefabs/DefaultButton"), new Vector3(1400f, 100f, 0), Quaternion.identity);
+                continueToinput.transform.GetChild(0).GetComponent<Text>().text = "continue";
+                continueToinput.transform.SetParent(buttonHolder.transform);
+                break;
+
+            // points to win
+            case 5:
+                GameObject.Find("Fields").SetActive(false);
+                Resources.FindObjectsOfTypeAll<GameObject>().First(n => n.name == "ScoreAmount").SetActive(true);
+
+                GameObject continueToGame = Instantiate(Resources.Load<GameObject>("Prefabs/DefaultButton"), new Vector3(1400f, 100f, 0), Quaternion.identity);
+                continueToGame.transform.GetChild(0).GetComponent<Text>().text = "continue";
+                continueToGame.transform.SetParent(buttonHolder.transform);
+                break;
+
+            // destroyable
+            case 6:
+                if (GameInstance.SharedInstance.GameEndCondition.Key == "Points scored")
+                {
+                    GameInstance.SharedInstance.ScoreToWin = Int32.Parse(GameObject.Find("ChosenScoreNum").GetComponent<Text>().text);
+                    Debug.LogWarning(GameInstance.SharedInstance.ScoreToWin);
+                    GameObject.Find("ScoreAmount").SetActive(false);
+                }
+                    Resources.FindObjectsOfTypeAll<GameObject>().First(n => n.name == "Fields").SetActive(true);
+
+                foreach (Transform child in GameObject.Find("Fields").transform)
+                {
+                    Destroy(child.gameObject.GetComponent<GoalFieldSelector>());
+                    Destroy(child.gameObject.GetComponent<ScoreFieldSelector>());
+                    Destroy(child.gameObject.GetComponent<FieldOrderSelector>());
                     child.gameObject.AddComponent<DeathFieldSelector>();
                 }
 
@@ -151,8 +202,8 @@ public class SelectionController : MonoBehaviour
                 continueToGameButton.transform.SetParent(buttonHolder.transform);
                 break;
 
-            case 5:
-            case 6:
+            case 7:
+            case 8:
                 SceneController.OnSceneLoad("Gameplay");
                 break;
 

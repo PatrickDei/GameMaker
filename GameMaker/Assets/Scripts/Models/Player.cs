@@ -10,12 +10,16 @@ public class Player
     public List<KeyValuePair<Figure, int>> Figures { get; set; }
     public string FigureName { get; set; }
 
+    public int Points { get; set; }
+
     public Player(string name = "player") {
+        Points = 0;
         Name = name;
     }
 
     public Player(List<KeyValuePair<Figure, int>> figures, string figure, string name = "player")
     {
+        Points = 0;
         Name = name;
         Figures = figures;
         FigureName = figure;

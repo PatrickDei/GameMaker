@@ -3,21 +3,9 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Events;
 
-public class GoalFieldSelector : MonoBehaviour
+public class GoalFieldSelector : FieldSelector
 {
-    UnityEvent goalSelectionEvent = new UnityEvent();
-
-    public void Start()
-    {
-        goalSelectionEvent.AddListener(ChooseAsGoal);
-    }
-
-    void OnMouseDown()
-    {
-        goalSelectionEvent.Invoke();
-    }
-
-    void ChooseAsGoal()
+    protected override void Choose()
     {
         gameObject.GetComponent<Renderer>().material.color = Color.green;
         GameInstance.SharedInstance.WiningFields.Add(gameObject.name); 

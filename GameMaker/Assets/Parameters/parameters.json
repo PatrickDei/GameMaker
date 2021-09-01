@@ -1,7 +1,8 @@
 {
     "GameEnd": {
       "Win": [
-        "Reach goal"
+        "Reach goal",
+        "Points scored"
       ],
       "Lose": [
         "No figures left"

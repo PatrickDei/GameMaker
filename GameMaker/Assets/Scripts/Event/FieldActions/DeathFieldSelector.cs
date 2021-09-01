@@ -3,21 +3,9 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Events;
 
-public class DeathFieldSelector : MonoBehaviour
+public class DeathFieldSelector : FieldSelector
 {
-    UnityEvent selectionEvent = new UnityEvent();
-
-    public void Start()
-    {
-        selectionEvent.AddListener(ChooseAsLethal);
-    }
-
-    void OnMouseDown()
-    {
-        selectionEvent.Invoke();
-    }
-
-    void ChooseAsLethal()
+    protected override void Choose()
     {
         gameObject.GetComponent<Renderer>().material.color = Color.red;
         GameInstance.SharedInstance.LethalFields.Add(gameObject.name);

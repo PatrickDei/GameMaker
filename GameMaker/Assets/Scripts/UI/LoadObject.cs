@@ -165,6 +165,13 @@ public class LoadObject : MonoBehaviour
                 field.gameObject.GetComponent<Renderer>().material.color = Color.green;
             if(GameInstance.SharedInstance.LethalFields.Contains(field.name))
                 field.gameObject.GetComponent<Renderer>().material.color = Color.red;
+            if (GameInstance.SharedInstance.ScoringFields.Contains(field.name))
+            {
+                GameObject star = Instantiate(Resources.Load<GameObject>("Prefabs/Star"), new Vector3(), Quaternion.identity);
+                GameInstance.SharedInstance.Stars.Add(star.GetComponent<Star>());
+                star.GetComponent<Star>().MoveTo(field.gameObject); 
+                star.GetComponent<Star>().FieldName = field.name;
+            }
         }
 
         Destroy(map.GetComponent<BoxCollider>());
