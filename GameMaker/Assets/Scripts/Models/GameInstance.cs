@@ -52,6 +52,7 @@ public class GameInstance
     public bool cubeIsFollowed = false;
     public int numOfFiguresPerPlayer;
     public List<string> WiningFields = new List<string>();
+    public List<string> LethalFields = new List<string>();
     public bool DestroyingFigures = true;
 
     public void MovePlayersFigure(GameObject target)
@@ -65,8 +66,14 @@ public class GameInstance
         if (selectedPlayer != null)
         {
             GameObject overlappedFigure = selectedPlayer.MoveFigure(target);
+
             if(DestroyingFigures)
                 Object.Destroy(overlappedFigure);
+
+            if (LethalFields.Contains(target.name)) {
+                selectedPlayer.Figures.Remove(selectedPlayer.Figures.First(f => f.Key.Figurine == GameController.selectedFigure));
+                Object.Destroy(GameController.selectedFigure);
+            }
         }
         else
             Debug.LogError("Couldn't recognise figure, select it once more!");

@@ -129,13 +129,30 @@ public class SelectionController : MonoBehaviour
                 newInstructions.transform.GetComponent<Text>().text = "Select fields you win if you step on";
                 newInstructions.transform.SetParent(buttonHolder.transform);
 
+                GameObject continueToLethal = Instantiate(Resources.Load<GameObject>("Prefabs/DefaultButton"), new Vector3(1400f, 100f, 0), Quaternion.identity);
+                continueToLethal.transform.GetChild(0).GetComponent<Text>().text = "continue";
+                continueToLethal.transform.SetParent(buttonHolder.transform);
+                break;
+
+            case 4:
+                foreach (Transform child in GameObject.Find("Fields").transform)
+                {
+                    Destroy(child.gameObject.GetComponent<GoalFieldSelector>());
+                    child.gameObject.AddComponent<DeathFieldSelector>();
+                }
+
+                GameObject lethalInstructions = Instantiate(Resources.Load<GameObject>("Prefabs/DefaultMenuText"), new Vector3(600f, 750f, 0), Quaternion.identity);
+                lethalInstructions.name = "Instructions";
+                lethalInstructions.transform.GetComponent<Text>().text = "Select fields that destoy figures";
+                lethalInstructions.transform.SetParent(buttonHolder.transform);
+
                 GameObject continueToGameButton = Instantiate(Resources.Load<GameObject>("Prefabs/DefaultButton"), new Vector3(1400f, 100f, 0), Quaternion.identity);
                 continueToGameButton.transform.GetChild(0).GetComponent<Text>().text = "continue";
                 continueToGameButton.transform.SetParent(buttonHolder.transform);
                 break;
 
-            case 4:
             case 5:
+            case 6:
                 SceneController.OnSceneLoad("Gameplay");
                 break;
 

@@ -19,10 +19,16 @@ public class GameController : MonoBehaviour
             return;
         }
 
-        if (!GameInstance.SharedInstance.GameEndCondition.Value && GameInstance.SharedInstance.GameEndCondition.Key == "No figures left")
-            foreach (var player in GameInstance.SharedInstance.Players)
-                if (player.Figures.Count == 0)
-                    TriggerGameLost(player);
+        int playersAlive = 0;
+        Player potentialWinner = null;
+        foreach (var player in GameInstance.SharedInstance.Players)
+            if (player.Figures.Count != 0)
+            {
+                playersAlive++;
+                potentialWinner = player;
+            }
+        if (playersAlive == 1)
+            TriggerGameWon(potentialWinner);
 
         if (GameInstance.SharedInstance.GameEndCondition.Value && GameInstance.SharedInstance.GameEndCondition.Key == "Reach goal")
             if (GameInstance.SharedInstance.WiningFields.Contains(field.name))

@@ -17,22 +17,8 @@ MonoBehaviour:
     m_SerializedData: []
   m_GUID: 3f66ad5e3bc2c7540864e8de984c04bf
   m_SerializeEntries:
-  - m_GUID: 12581f591b1666742b10898d387811e9
-    m_Address: Assets/Resources_moved/Maps/Monopoly.jpg
-    m_ReadOnly: 0
-    m_SerializedLabels:
-    - Maps
-    m_MainAsset: {fileID: 0}
-    m_TargetAsset: {fileID: 0}
   - m_GUID: 667d213982b48d947ba6e930d21ac253
     m_Address: Assets/Prefabs/Maps/Basic Map With Spheres.prefab
-    m_ReadOnly: 0
-    m_SerializedLabels:
-    - Maps
-    m_MainAsset: {fileID: 0}
-    m_TargetAsset: {fileID: 0}
-  - m_GUID: 95796e07e2ba3bf42b4a5f22c65f800e
-    m_Address: Assets/Resources_moved/Maps/Risk.jpg
     m_ReadOnly: 0
     m_SerializedLabels:
     - Maps

@@ -159,9 +159,13 @@ public class LoadObject : MonoBehaviour
             }
         }
 
-        foreach(Transform field in map.transform.GetChild(0).transform)
-            if(GameInstance.SharedInstance.WiningFields.Contains(field.name))
+        foreach (Transform field in map.transform.GetChild(0).transform)
+        {
+            if (GameInstance.SharedInstance.WiningFields.Contains(field.name))
                 field.gameObject.GetComponent<Renderer>().material.color = Color.green;
+            if(GameInstance.SharedInstance.LethalFields.Contains(field.name))
+                field.gameObject.GetComponent<Renderer>().material.color = Color.red;
+        }
 
         Destroy(map.GetComponent<BoxCollider>());
         Destroy(map.GetComponent<OnClickObject>());
