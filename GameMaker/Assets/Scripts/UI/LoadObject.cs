@@ -178,7 +178,7 @@ public class LoadObject : MonoBehaviour
         Destroy(map.GetComponent<OnClickObject>());
         Debug.Log("Component deleted on parent!");
 
-        //LoadPlayerStats();
+        LoadPlayerStats();
     }
     
     void LoadPlayerStats()
@@ -190,18 +190,17 @@ public class LoadObject : MonoBehaviour
         foreach(Player player in GameInstance.SharedInstance.Players)
         {
             GameObject newPlayer = Instantiate(playerInstance,
-                new Vector3(statsHolder.transform.position.x + 725, statsHolder.transform.position.y + (i++ * -100), statsHolder.transform.position.z), 
+                new Vector3(statsHolder.transform.position.x + 725, statsHolder.transform.position.y + (i++ * -150), statsHolder.transform.position.z), 
                 Quaternion.identity);
             newPlayer.name = player.Name;
             newPlayer.transform.SetParent(statsHolder.transform);
             newPlayer.transform.GetChild(0).gameObject.GetComponent<Text>().text = player.Name;
-
-            GameObject figurine = Instantiate(Resources.Load<GameObject>("Prefabs/" + player.FigureName), newPlayer.transform.GetChild(0).position, Quaternion.identity);
-            figurine.name = player.FigureName;
-            figurine.transform.SetParent(newPlayer.transform.GetChild(1).transform, false);
-            //figurine.transform.localScale = figurine.transform.localScale * 30;
-            Destroy(figurine.GetComponent<CapsuleCollider>());
+            newPlayer.transform.GetChild(1).gameObject.GetComponent<Text>().text = "Figures left " + GameInstance.SharedInstance.numOfFiguresPerPlayer;
+            if(GameInstance.SharedInstance.GameEndCondition.Key == "Points scored")
+                newPlayer.transform.GetChild(2).gameObject.GetComponent<Text>().text = "Score 0";
         }
+
+        GameObject.Find("Win Condition").GetComponent<Text>().text = "Win condition: " + GameInstance.SharedInstance.GameEndCondition.Key;
 
         Destroy(playerInstance);
     }

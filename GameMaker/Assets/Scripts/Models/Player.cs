@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class Player
 {
@@ -49,5 +50,15 @@ public class Player
                     }
                 }
         return null;
+    }
+
+    public void UpdateStats()
+    {
+        GameObject player = GameObject.Find(Name);
+
+        player.transform.GetChild(1).GetComponent<Text>().text = "Figures left " + Figures.Count;
+
+        if(GameInstance.SharedInstance.GameEndCondition.Key == "Points scored")
+            player.transform.GetChild(2).gameObject.GetComponent<Text>().text = "Score " + Points;
     }
 }

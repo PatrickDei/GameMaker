@@ -51,6 +51,8 @@ public class GameController : MonoBehaviour
                 TriggerGameWon(winner);
         }
 
+        foreach (var player in GameInstance.SharedInstance.Players)
+            player.UpdateStats();
     }
 
     public void ChangeDestroyFiguresOnSameFields()
